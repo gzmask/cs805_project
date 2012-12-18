@@ -132,19 +132,20 @@ void compute_shading_volume(Volume* ct, Volume* color) {
     std::array<int, 3> p = to_3d(i); 
     //ignore the outest layer
     if (p[0] == 0 || p[0] == (COLS-1) ||
-        p[1] == 0 || p[1] == (COLS-1) ||
-        p[2] == 0 || p[2] == (COLS-1)) {
+        p[1] == 0 || p[1] == (ROWS-1) ||
+        p[2] == 0 || p[2] == (SLCS-1)) {
       (*color)[i] = 0;
       continue;
     }
 
+    //calculate the partial derivitives
     Vector N_ = {
       (double)((*ct)[i] - (*ct)[to_1d(p[0]-1, p[1], p[2])]), 
       (double)((*ct)[i] - (*ct)[to_1d(p[0], p[1]-1, p[2])]), 
       (double)((*ct)[i] - (*ct)[to_1d(p[0], p[1], p[2]-1)])
     };
 
-    //threshold the blur surfaces
+    //threshold the blur surfaces <-----------------------------interactive point
     if (get_length(N_) < 10) {
       (*color)[i] = 0;
       continue;
@@ -152,7 +153,7 @@ void compute_shading_volume(Volume* ct, Volume* color) {
 
     //calculate shading value
     Vector N = normalize(N_);
-    unsigned char I = Ip * dot_product(N, Light);
+    unsigned char I = fabs(Ip * dot_product(N, Light));
     (*color)[i] = I;
   }
   return;

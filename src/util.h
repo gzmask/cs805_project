@@ -27,12 +27,6 @@ typedef std::array<double, 3> Vector;
 typedef std::array<int, 4> Four_counter;
 typedef std::array<Vector, 3> UVN;
 typedef std::vector<Point> Intersection;
-/*
-typedef struct {
-	Point t0;
-	Point t1;
-} Intersection;
-*/
 typedef struct {
 	Point ref;	/* reference point, where the ray is from */
 	Vector direction;	/* ray direction */
