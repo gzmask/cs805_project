@@ -14,3 +14,5 @@ The binary executable is in 'bin' folder
 The user interface requires PHP interpreter. The testing envornment is using Apache 2 with PHP module extension.
 
 A live verion is at http://that1.ca
+
+Source code are managed at https://github.com/gzmask/cs805_project
