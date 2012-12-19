@@ -31,7 +31,7 @@ Matrix Tcw = get_Ti(VRP);
 
 //unit rotation
 Point RRP = {0, 0, 0};
-Vector RyPN = {0.01, 0, 1};
+Vector RyPN = {0.02, 0, 1};
 Vector RzPN = {0, 0.02, 1};
 Vector RUP = {0.0, 1.0, 0.0};
 Matrix Rym = get_R(RRP, RyPN, RUP);

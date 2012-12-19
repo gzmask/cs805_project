@@ -2,7 +2,7 @@
 if ($_REQUEST['roty']) {
   $roty = $_REQUEST['roty'];
 } else {
-  $roty = 1;
+  $roty = 32;
 }
 if ($_REQUEST['rotz']) {
   $rotz = $_REQUEST['rotz'];
@@ -12,17 +12,17 @@ if ($_REQUEST['rotz']) {
 if ($_REQUEST['zoom']) {
   $zoom = $_REQUEST['zoom'];
 } else {
-  $zoom = 1;
+  $zoom = 50;
 }
 if ($_REQUEST['lcf']) {
   $lcf = $_REQUEST['lcf'];
 } else {
-  $lcf = 1;
+  $lcf = 10;
 }
 if ($_REQUEST['hcf']) {
   $hcf = $_REQUEST['hcf'];
 } else {
-  $hcf = 255;
+  $hcf = 245;
 }
 if ($_REQUEST['threshold']) {
   $threshold = $_REQUEST['threshold'];

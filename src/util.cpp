@@ -188,11 +188,11 @@ void foreach_pixel_exec(ImagePanel* img, std::function<unsigned char(Ray, Inters
 
     //construct Ray
     Ray ray = ray_construction(cam_xy[0], cam_xy[1]);
+    ray.ref = mul(Zm_, ray.ref);
     ray.ref = mul(Rym_, ray.ref);
     ray.direction = mul(Rym_, ray.direction);
     ray.ref = mul(Rzm_, ray.ref);
     ray.direction = mul(Rzm_, ray.direction);
-    ray.ref = mul(Zm_, ray.ref);
 
     //get intersection
     Intersection* intersection = new Intersection;
