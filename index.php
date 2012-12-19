@@ -2,27 +2,27 @@
 if ($_REQUEST['roty']) {
   $roty = $_REQUEST['roty'];
 } else {
-  $roty = 0;
+  $roty = 32;
 }
 if ($_REQUEST['rotz']) {
   $rotz = $_REQUEST['rotz'];
 } else {
-  $rotz = 0;
+  $rotz = 1;
 }
 if ($_REQUEST['zoom']) {
   $zoom = $_REQUEST['zoom'];
 } else {
-  $zoom = 0;
+  $zoom = 50;
 }
 if ($_REQUEST['lcf']) {
   $lcf = $_REQUEST['lcf'];
 } else {
-  $lcf = 0;
+  $lcf = 10;
 }
 if ($_REQUEST['hcf']) {
   $hcf = $_REQUEST['hcf'];
 } else {
-  $hcf = 100;
+  $hcf = 200;
 }
 ?>
 <html>
@@ -86,19 +86,23 @@ if ($_REQUEST['hcf']) {
       };
 
       $(document).ready(function() {
-        $("#roty_slider").slider({ animate:true, max:100, min:0, value:<?php echo $roty ?>,change:roty_change });
-        $("#rotz_slider").slider({ animate:true, max:100, min:0, value:<?php echo $rotz ?>,change:rotz_change });
-        $("#zoom_slider").slider({ animate:true, max:100, min:0, value:<?php echo $zoom ?>,change:zoom_change });
-        $("#filter_slider").slider({ range:true, animate:true, max:250, min:0, values:[<?php echo $lcf.','.$hcf ?>],change:filter_change });
+        $("#roty_slider").slider({ animate:true, max:100, min:1, value:<?php echo $roty ?>,change:roty_change });
+        $("#rotz_slider").slider({ animate:true, max:100, min:1, value:<?php echo $rotz ?>,change:rotz_change });
+        $("#zoom_slider").slider({ animate:true, max:100, min:1, value:<?php echo $zoom ?>,change:zoom_change });
+        $("#filter_slider").slider({ range:true, animate:true, max:250, min:1, values:[<?php echo $lcf.','.$hcf ?>],change:filter_change });
       });
     </script>
   </head>
   <body>
-<?php
-echo shell_exec('bin/run '.$roty.' '.$rotz.' '.$zoom.' '.$lcf.' '.$hcf);
-shell_exec('rawtopgm 512 512 output.raw > tmp.pgm');
-shell_exec('ppmtojpeg < tmp.pgm > result.jpg');
-?>
+    <h1> Computer Graphic: Volume rendering CT sample </h1>
+    <p>
+      Please adjust the following sliders to intractively modify the rendering.<br />
+    </p>
+    <?php
+    shell_exec('bin/run '.$roty.' '.$rotz.' '.$zoom.' '.$lcf.' '.$hcf);
+    shell_exec('rawtopgm 512 512 output.raw > tmp.pgm');
+    shell_exec('ppmtojpeg < tmp.pgm > result.jpg');
+    ?>
   <table>
   <tr>
     <td style="width: 500px;">

@@ -5,10 +5,12 @@ The source code is inside 'src' folder
   Global variable assignments are in main.cpp
   Function implementations are in util.cpp
   Main program is the int main() function in main.cpp
-  The Web++ http server library is web++.hpp
+  User Interface is index.php
 
-The compile script is the compile.sh
-
-The picture format converting script is the extract.sh
+The compile script is the compile.sh. Compilation passed on Clang++ 3.1 on ubuntu 12.10 32bit.
 
 The binary executable is in 'bin' folder
+
+The user interface requires PHP interpreter. The testing envornment is using Apache 2 with PHP module extension.
+
+A live verion is at http://that1.ca
