@@ -12,7 +12,8 @@ bool ray_box_intersection(Ray ray, Intersection* intersection) {
   z = ray.ref[2] + ray.direction[2]*t;
   if (y >0 && y<ROWS && z>0 && z<SLCS) {
     n++;
-    intersection->push_back( {0, y, z} );
+    Point a = {0,y,z};
+    intersection->push_back( a );
   }
 
   //x=127
@@ -21,7 +22,8 @@ bool ray_box_intersection(Ray ray, Intersection* intersection) {
   z = ray.ref[2] + ray.direction[2]*t;
   if (y >0 && y<ROWS && z>0 && z<SLCS) {
     n++;
-    intersection->push_back( {127, y, z} );
+    Point a = {127,y,z};
+    intersection->push_back( a );
   }
   
   //y=0
@@ -30,7 +32,8 @@ bool ray_box_intersection(Ray ray, Intersection* intersection) {
   z = ray.ref[2] + ray.direction[2]*t;
   if (x >0 && x<COLS && z>0 && z<SLCS) {
     n++;
-    intersection->push_back( {x, 0, z} );
+    Point a = {x,0,z};
+    intersection->push_back( a );
   }
 
   //y=127
@@ -39,7 +42,8 @@ bool ray_box_intersection(Ray ray, Intersection* intersection) {
   z = ray.ref[2] + ray.direction[2]*t;
   if (x >0 && x<COLS && z>0 && z<SLCS) {
     n++;
-    intersection->push_back( {x, 127, z} );
+    Point a = {x,127,z};
+    intersection->push_back( a );
   }
 
   //z=0
@@ -48,7 +52,8 @@ bool ray_box_intersection(Ray ray, Intersection* intersection) {
   y = ray.ref[1] + ray.direction[1]*t;
   if (x >0 && x<COLS && y>0 && y<ROWS) {
     n++;
-    intersection->push_back( {x, y, 0} );
+    Point a = {x,y,0};
+    intersection->push_back( a );
   }
 
   //z=127
@@ -57,7 +62,8 @@ bool ray_box_intersection(Ray ray, Intersection* intersection) {
   y = ray.ref[1] + ray.direction[1]*t;
   if (x >0 && x<COLS && y>0 && y<ROWS) {
     n++;
-    intersection->push_back( {x, y, 127} );
+    Point a = {x,y,127};
+    intersection->push_back( a );
   }
 
   if (n==2) {
