@@ -171,23 +171,28 @@ void compute_shading_volume(Volume* ct, Volume* color, unsigned char lcf, unsign
 
 //pixel iterator for img panel.
 void foreach_pixel_exec(ImagePanel* img, std::function<unsigned char(Ray, Intersection, Volume*, Volume*)> ray_func, Volume* ct, Volume* color, int roty, int rotz, int zoom) {
+  //pre-calcuate the transformation matrix
+  Matrix Rym_ = Rym;
+  Matrix Rzm_ = Rzm;
+  Matrix Zm_ = Zm;
+  for(int i=0; i<roty; i++) 
+    Rym_ = mul(Rym_, Rym);
+  for(int i=0; i<rotz; i++)
+    Rzm_ = mul(Rzm_, Rzm);
+  for(int i=0; i<zoom; i++)
+    Zm_ = mul(Zm_, Zm);
+
   for (int i = 0; i < IMG_LEN; i++) { //for each pixel
     //using to_2d function to get x,y camera coordinates
     std::array<int, 2> cam_xy = to_2d(i);
 
     //construct Ray
     Ray ray = ray_construction(cam_xy[0], cam_xy[1]);
-    for(int i=0; i<roty; i++) {
-      ray.ref = mul(Rym, ray.ref);
-      ray.direction = mul(Rym, ray.direction);
-    }
-    for(int i=0; i<rotz; i++) {
-      ray.ref = mul(Rzm, ray.ref);
-      ray.direction = mul(Rzm, ray.direction);
-    }
-    for(int i=0; i<zoom; i++) {
-      ray.ref = mul(Zm, ray.ref);
-    }
+    ray.ref = mul(Rym_, ray.ref);
+    ray.direction = mul(Rym_, ray.direction);
+    ray.ref = mul(Rzm_, ray.ref);
+    ray.direction = mul(Rzm_, ray.direction);
+    ray.ref = mul(Zm_, ray.ref);
 
     //get intersection
     Intersection* intersection = new Intersection;
