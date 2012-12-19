@@ -27,7 +27,7 @@ if ($_REQUEST['hcf']) {
 if ($_REQUEST['threshold']) {
   $threshold = $_REQUEST['threshold'];
 } else {
-  $threshold = 1;
+  $threshold = 0;
 }
 ?>
 <html>
@@ -104,7 +104,7 @@ if ($_REQUEST['threshold']) {
         $("#rotz_slider").slider({ animate:true, max:100, min:1, value:<?php echo $rotz ?>,change:rotz_change });
         $("#zoom_slider").slider({ animate:true, max:100, min:1, value:<?php echo $zoom ?>,change:zoom_change });
         $("#filter_slider").slider({ range:true, animate:true, max:255, min:1, values:[<?php echo $lcf.','.$hcf ?>],change:filter_change });
-        $("#threshold_slider").slider({ range:"min", animate:true, max:100, min:1, value:<?php echo $threshold ?>,change:threshold_change });
+        $("#threshold_slider").slider({ range:"min", animate:true, max:100, min:0, value:<?php echo $threshold ?>,change:threshold_change });
       });
     </script>
   </head>
