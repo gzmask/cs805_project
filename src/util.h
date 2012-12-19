@@ -56,10 +56,10 @@ typedef struct {
 
 //functions
 POLY4_2D flatten(POLY4, Point);
-void foreach_pixel_exec(ImagePanel*, std::function<unsigned char(Ray, Intersection, Volume*, Volume*)>, Volume*, Volume*);
+void foreach_pixel_exec(ImagePanel*, std::function<unsigned char(Ray, Intersection, Volume*, Volume*)>, Volume*, Volume*, int, int, int);
 void init_img_panel(ImagePanel*);
 Ray ray_construction(int, int);
-void compute_shading_volume(Volume*, Volume*);
+void compute_shading_volume(Volume*, Volume*, int, int);
 bool ray_box_intersection(Ray, Intersection*);
 unsigned char volume_ray_tracing(Ray, Intersection, Volume*, Volume*);
 void compute_shading_volume(Volume*);
@@ -106,6 +106,9 @@ extern Matrix Twc;
 extern Matrix Mcw;
 extern Matrix Rcw;
 extern Matrix Tcw;
+extern Matrix Rym;
+extern Matrix Rzm;
+extern Matrix Zm;
 extern double xmin;
 extern double ymin;
 extern double xmax;

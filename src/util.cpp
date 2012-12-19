@@ -133,7 +133,7 @@ unsigned char linear_interpolate(unsigned char a, unsigned char b, double p) {
 }
 
 //shading the ct volume
-void compute_shading_volume(Volume* ct, Volume* color) {
+void compute_shading_volume(Volume* ct, Volume* color, int lcf, int hcf) {
   for (int i=0; i<VOL_LEN; i++) {
     std::array<int, 3> p = to_3d(i); 
     //ignore the outest layer
@@ -152,7 +152,7 @@ void compute_shading_volume(Volume* ct, Volume* color) {
     };
 
     //threshold the blur surfaces <-----------------------------interactive point
-    if (get_length(N_) < 10) {
+    if (get_length(N_) < lcf || get_length(N_) > hcf) {
       (*color)[i] = 0;
       continue;
     }
@@ -166,13 +166,24 @@ void compute_shading_volume(Volume* ct, Volume* color) {
 }
 
 //pixel iterator for img panel.
-void foreach_pixel_exec(ImagePanel* img, std::function<unsigned char(Ray, Intersection, Volume*, Volume*)> ray_func, Volume* ct, Volume* color) {
+void foreach_pixel_exec(ImagePanel* img, std::function<unsigned char(Ray, Intersection, Volume*, Volume*)> ray_func, Volume* ct, Volume* color, int roty, int rotz, int zoom) {
   for (int i = 0; i < IMG_LEN; i++) { //for each pixel
     //using to_2d function to get x,y camera coordinates
     std::array<int, 2> cam_xy = to_2d(i);
 
     //construct Ray
     Ray ray = ray_construction(cam_xy[0], cam_xy[1]);
+    for(int i=0; i<roty; i++) {
+      ray.ref = mul(Rym, ray.ref);
+      ray.direction = mul(Rym, ray.direction);
+    }
+    for(int i=0; i<rotz; i++) {
+      ray.ref = mul(Rzm, ray.ref);
+      ray.direction = mul(Rzm, ray.direction);
+    }
+    for(int i=0; i<zoom; i++) {
+      ray.ref = mul(Zm, ray.ref);
+    }
 
     //get intersection
     Intersection* intersection = new Intersection;
