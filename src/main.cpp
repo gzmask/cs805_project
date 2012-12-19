@@ -45,14 +45,15 @@ int main (int argc, char* argv[]) {
   int roty_value = atoi(argv[1]);
   int rotz_value = atoi(argv[2]);
   int zoom_value = atoi(argv[3]);
-  int lcf = atoi(argv[4]);
-  int hcf = atoi(argv[5]);
+  unsigned char lcf = atoi(argv[4]);
+  unsigned char hcf = atoi(argv[5]);
+  unsigned char threshold = atoi(argv[6]);
 
   //main program for volume rendering
   Volume* ct = new Volume;
   read_from_file("smallHead.den", ct);
   Volume* color = new Volume;
-  compute_shading_volume(ct, color, lcf, hcf);
+  compute_shading_volume(ct, color, lcf, hcf, threshold);
   ImagePanel* img = new ImagePanel;
   init_img_panel(img);
   foreach_pixel_exec(img, volume_ray_tracing, ct, color, roty_value, rotz_value, zoom_value);

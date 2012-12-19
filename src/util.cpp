@@ -133,7 +133,7 @@ unsigned char linear_interpolate(unsigned char a, unsigned char b, double p) {
 }
 
 //shading the ct volume
-void compute_shading_volume(Volume* ct, Volume* color, int lcf, int hcf) {
+void compute_shading_volume(Volume* ct, Volume* color, unsigned char lcf, unsigned char hcf, unsigned char threshold) {
   for (int i=0; i<VOL_LEN; i++) {
     std::array<int, 3> p = to_3d(i); 
     //ignore the outest layer
@@ -152,7 +152,7 @@ void compute_shading_volume(Volume* ct, Volume* color, int lcf, int hcf) {
     };
 
     //threshold the blur surfaces <-----------------------------interactive point
-    if (get_length(N_) < lcf || get_length(N_) > hcf) {
+    if (get_length(N_) < threshold) {
       (*color)[i] = 0;
       continue;
     }
@@ -160,7 +160,11 @@ void compute_shading_volume(Volume* ct, Volume* color, int lcf, int hcf) {
     //calculate shading value
     Vector N = normalize(N_);
     unsigned char I = fabs(Ip * dot_product(N, Light));
-    (*color)[i] = I;
+    if ((*ct)[i] < lcf || (*ct)[i] > hcf) {
+      (*color)[i] = 0;
+    } else {
+      (*color)[i] = I;
+    }
   }
   return;
 }

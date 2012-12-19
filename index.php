@@ -2,7 +2,7 @@
 if ($_REQUEST['roty']) {
   $roty = $_REQUEST['roty'];
 } else {
-  $roty = 32;
+  $roty = 1;
 }
 if ($_REQUEST['rotz']) {
   $rotz = $_REQUEST['rotz'];
@@ -12,17 +12,22 @@ if ($_REQUEST['rotz']) {
 if ($_REQUEST['zoom']) {
   $zoom = $_REQUEST['zoom'];
 } else {
-  $zoom = 50;
+  $zoom = 1;
 }
 if ($_REQUEST['lcf']) {
   $lcf = $_REQUEST['lcf'];
 } else {
-  $lcf = 10;
+  $lcf = 1;
 }
 if ($_REQUEST['hcf']) {
   $hcf = $_REQUEST['hcf'];
 } else {
-  $hcf = 200;
+  $hcf = 255;
+}
+if ($_REQUEST['threshold']) {
+  $threshold = $_REQUEST['threshold'];
+} else {
+  $threshold = 10;
 }
 ?>
 <html>
@@ -38,6 +43,10 @@ if ($_REQUEST['hcf']) {
         color: white;
       }
 
+      #threshold_slider { 
+        background: #00f;
+        margin: 10px; 
+      }
       #filter_slider { 
         background: #f00;
         margin: 10px; 
@@ -79,6 +88,11 @@ if ($_REQUEST['hcf']) {
         window.location = newURL;
       };
 
+      function threshold_change(event, ui){
+        var newURL = updateURLParameter(window.location.href, 'threshold', ui.value);
+        window.location = newURL;
+      };
+
       function filter_change(event, ui){
         var newURL = updateURLParameter(window.location.href, 'lcf', ui.values[0]);
         newURL = updateURLParameter(newURL, 'hcf', ui.values[1]);
@@ -89,7 +103,8 @@ if ($_REQUEST['hcf']) {
         $("#roty_slider").slider({ animate:true, max:100, min:1, value:<?php echo $roty ?>,change:roty_change });
         $("#rotz_slider").slider({ animate:true, max:100, min:1, value:<?php echo $rotz ?>,change:rotz_change });
         $("#zoom_slider").slider({ animate:true, max:100, min:1, value:<?php echo $zoom ?>,change:zoom_change });
-        $("#filter_slider").slider({ range:true, animate:true, max:250, min:1, values:[<?php echo $lcf.','.$hcf ?>],change:filter_change });
+        $("#filter_slider").slider({ range:true, animate:true, max:255, min:1, values:[<?php echo $lcf.','.$hcf ?>],change:filter_change });
+        $("#threshold_slider").slider({ range:"min", animate:true, max:100, min:1, value:<?php echo $threshold ?>,change:threshold_change });
       });
     </script>
   </head>
@@ -99,7 +114,7 @@ if ($_REQUEST['hcf']) {
       Please adjust the following sliders to intractively modify the rendering.<br />
     </p>
     <?php
-    shell_exec('bin/run '.$roty.' '.$rotz.' '.$zoom.' '.$lcf.' '.$hcf);
+    shell_exec('bin/run '.$roty.' '.$rotz.' '.$zoom.' '.$lcf.' '.$hcf.' '.$threshold);
     shell_exec('rawtopgm 512 512 output.raw > tmp.pgm');
     shell_exec('ppmtojpeg < tmp.pgm > result.jpg');
     ?>
@@ -114,6 +129,8 @@ if ($_REQUEST['hcf']) {
       <div id="zoom_slider"></div><br />
       Density filter:<br />
       <div id="filter_slider"></div><br />
+      Derivative Threshold:<br />
+      <div id="threshold_slider"></div><br />
     </td>
     <td><img src="result.jpg" /></td>
   </tr>
