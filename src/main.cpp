@@ -1,6 +1,5 @@
 #include <iostream>
 #include "util.h"
-#include "web++.hpp"
 
 /* definition of window on the image plane in the camera coordinates */
 /* They are used in mapping (j, i) in the screen coordinates into */
@@ -29,6 +28,7 @@ Matrix Twc = get_T(VRP);
 Matrix Mcw = get_Mi(VRP, VPN, VUP);
 Matrix Rcw = get_Ri(VRP, VPN, VUP);
 Matrix Tcw = get_Ti(VRP);
+
 
 int main () {
 
